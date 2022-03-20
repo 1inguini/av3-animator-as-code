@@ -285,7 +285,7 @@ namespace AnimatorAsCode.V0
 
         public AacFlStateMachine WithDefaultState(AacFlState newDefaultState)
         {
-            _machine.defaultState = newDefaultState.State;
+            Machine.defaultState = newDefaultState.State;
             return this;
         }
     }
