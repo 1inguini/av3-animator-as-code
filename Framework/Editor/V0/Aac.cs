@@ -247,6 +247,24 @@ namespace AnimatorAsCode.V0
 
             WithAvatarMask(avatarMask);
         }
+
+        public AacFlLayer WithBlendingMode(AnimatorLayerBlendingMode blendingMode)
+        {
+            var finalFullLayerName = _fullLayerName;
+            _animatorController.layers = _animatorController.layers
+                .Select(layer =>
+                {
+                    if (layer.name == finalFullLayerName)
+                    {
+                        layer.blendingMode = blendingMode;
+                    }
+
+                    return layer;
+                })
+                .ToArray();
+
+            return this;
+        }
     }
 
     public class AacFlBase
