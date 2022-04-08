@@ -647,46 +647,6 @@ namespace AnimatorAsCode.V0
         }
     }
 
-    public class AacParameterRemoval
-    {
-        private readonly AnimatorController _animatorController;
-        private string _parameterName;
-
-        public AacParameterRemoval(AnimatorController animatorController)
-        {
-            _animatorController = animatorController;
-        }
-
-        public void RemoveParameterIfNotUsed(string parameterName)
-        {
-            _parameterName = parameterName;
-            var index = FindIndexOf();
-            if (index == -1 || CheckIfUsed()) return;
-
-            _animatorController.RemoveParameter(index);
-        }
-
-        private int FindIndexOf()
-        {
-            return _animatorController.parameters.ToList().FindIndex(parameter => parameter.name == _parameterName);
-        }
-
-        private bool CheckIfUsed() => _animatorController.layers.Any(layer => CheckIfUsed(layer.stateMachine));
-
-        private bool CheckIfUsed(AnimatorStateMachine stateMachine) =>
-            stateMachine.entryTransitions.Any(CheckIfUsed)
-            || stateMachine.anyStateTransitions.Any(CheckIfUsed)
-            || stateMachine.states.Any(state =>
-                state.state.transitions.Any(CheckIfUsed)
-                || state.state.behaviours.Any(behaviour =>
-                    behaviour is VRCAvatarParameterDriver
-                    && ((VRCAvatarParameterDriver)behaviour).parameters.Any(paramater => paramater.name == _parameterName)))
-            || stateMachine.stateMachines.Any(child => CheckIfUsed(child.stateMachine));
-
-        private bool CheckIfUsed(AnimatorTransitionBase transition) =>
-            transition.conditions.Any(condition => condition.parameter == _parameterName);
-    }
-
     public class AacAnimatorGenerator
     {
         private readonly AnimatorController _animatorController;
