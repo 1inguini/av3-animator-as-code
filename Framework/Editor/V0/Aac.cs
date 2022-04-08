@@ -401,11 +401,6 @@ namespace AnimatorAsCode.V0
             new AacAnimatorRemoval(controller).RemoveLayer(_configuration.DefaultsProvider.ConvertLayerName(layerName));
         }
 
-        private void RemoveLayer(AnimatorController controller, string layerName)
-        {
-            new AacAnimatorRemoval(controller).RemoveLayer(_configuration.DefaultsProvider.ConvertLayerName(layerName));
-        }
-
         public AacFlLayer CreateMainFxLayer() => DoCreateMainLayerOnController(VRCAvatarDescriptor.AnimLayerType.FX);
         public AacFlLayer CreateMainGestureLayer() => DoCreateMainLayerOnController(VRCAvatarDescriptor.AnimLayerType.Gesture);
         public AacFlLayer CreateMainActionLayer() => DoCreateMainLayerOnController(VRCAvatarDescriptor.AnimLayerType.Action);
