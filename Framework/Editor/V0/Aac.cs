@@ -311,7 +311,6 @@ namespace AnimatorAsCode.V0
                     .WithUnit(unit, keyframes => keyframes.Constant(0, 0f).Constant(duration, 0f)));
         }
 
-
         public void RemovePreviousParameters()
         {
             var customAnimLayers = AacV0.CustomAnimLayers(_configuration.AvatarDescriptor);
@@ -376,8 +375,12 @@ namespace AnimatorAsCode.V0
             var layers = _configuration.AvatarDescriptor.baseAnimationLayers.Select(layer => layer.animatorController).Where(layer => layer != null).Distinct().ToList();
             foreach (var customAnimLayer in layers)
             {
-                new AacAnimatorRemoval((AnimatorController) customAnimLayer).RemoveLayer(_configuration.DefaultsProvider.ConvertLayerName(layerName));
+                RemoveLayer((AnimatorController)customAnimLayer, layerName);
             }
+        }
+        private void RemoveLayer(AnimatorController controller, string layerName)
+        {
+            new AacAnimatorRemoval(controller).RemoveLayer(_configuration.DefaultsProvider.ConvertLayerName(layerName));
         }
 
         private void RemoveLayer(AnimatorController controller, string layerName)
